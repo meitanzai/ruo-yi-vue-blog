@@ -42,6 +42,18 @@ public class CmsBlog extends BaseEntity {
     private String content;
 
     /**
+     * 文本编辑器类型 1 Quill富文本编辑器 2 CherryMarkdown
+     */
+    @Excel(name = "文本编辑器类型")
+    private String contentType;
+
+    /**
+     * Markdown格式内容
+     */
+    @Excel(name = "Markdown格式内容")
+    private String contentMarkdown;
+
+    /**
      * 置顶（0否 1是）
      */
     @Excel(name = "置顶", readConverterExp = "0=否,1=是")
@@ -198,6 +210,22 @@ public class CmsBlog extends BaseEntity {
         this.blogFiles = blogFiles;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getContentMarkdown() {
+        return contentMarkdown;
+    }
+
+    public void setContentMarkdown(String contentMarkdown) {
+        this.contentMarkdown = contentMarkdown;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -209,6 +237,8 @@ public class CmsBlog extends BaseEntity {
                 .append("title", getTitle())
                 .append("type", getType())
                 .append("content", getContent())
+                .append("contentType", getContentType())
+                .append("contentMarkdown", getContentMarkdown())
                 .append("top", getTop())
                 .append("views", getViews())
                 .append("status", getStatus())

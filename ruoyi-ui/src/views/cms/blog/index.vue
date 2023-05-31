@@ -114,7 +114,21 @@
         </el-row>
         <el-form-item label="内容">
           <!-- 图片用base64存储,url方式移动端会显示异常 -->
-          <cmsEditor v-model="form.content" @getFileId="getFileId" type="base64" :min-height="192" />
+          <el-row style="margin-bottom: 20px;">
+            <el-col align="right">
+              编辑器：
+              <el-select v-model="form.contentType" placeholder="请选择">
+                <el-option key="1" label="Quill富文本编辑器" value="1" />
+                <el-option key="2" label="CherryMarkdown" value="2" />
+              </el-select>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col>
+              <cmsEditor v-if="form.contentType ==='1'" v-model="form.content" @getFileId="getFileId" type="base64" :min-height="192" />
+              <CherryMarkdown ref="CherryMarkdown" v-if="form.contentType ==='2'" :height='400' v-model='form.contentMarkdown' ></CherryMarkdown>
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="标签">
           <el-checkbox-group v-model="form.tagIds">
@@ -229,6 +243,7 @@
 
 <script>
   import filesUpload from './components/filesUpload'
+  import CherryMarkdown from '@/components/CherryMarkdown'
   import {
     listBlog,
     getBlog,
@@ -253,7 +268,8 @@
     name: "Blog",
     dicts: ['cms_blog_status'],
     components: {
-      filesUpload
+      filesUpload,
+      CherryMarkdown
     },
     data() {
       return {
@@ -374,7 +390,9 @@
           blogPic: null,
           tagIds: [],
           typeIds: [],
-          blogFilesNew: []
+          blogFilesNew: [],
+          contentType: "1",
+          contentMarkdown: null
         };
         this.resetForm("form");
       },
@@ -431,6 +449,9 @@
             } else {
               this.form.top = 0;
             }
+            if (this.form.contentType === '2'){
+              this.setFormContent()
+            }
             if (this.form.id != null) {
               updateBlog(this.form).then(response => {
                 if (this.fileIds.length > 0) {
@@ -473,6 +494,9 @@
               this.form.top = 1;
             } else {
               this.form.top = 0;
+            }
+            if (this.form.contentType === '2'){
+              this.setFormContent()
             }
             if (this.form.id != null) {
               updateBlog(this.form).then(response => {
@@ -670,6 +694,9 @@
           return 'warning-row';
         }
         return '';
+      },
+      setFormContent(){
+        this.form.content = this.$refs.CherryMarkdown.getCherryHtml()
       },
     }
   };

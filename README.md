@@ -138,6 +138,7 @@ RuoYi-Vue是一款基于SpringBoot+Vue的前后端分离极速后台开发框架
     </tr>
 	<tr>
         <td><img src="ruoyi-ui/public/systemImg/附件管理.png"/></td>>
+        <td><img src="ruoyi-ui/public/systemImg/markdown编辑器.jpg"/></td>>
     </tr>
 </table>
 
@@ -174,10 +175,42 @@ npm run build:prod
 ```
 
 
+
 ----------
 
 
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Blog移动端</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">欣然有你小程序（移动端可适配）</h1>
+
+移动端地址：<a target="_blank" href="https://gitee.com/Ning310975876/photo-graphy-uniapp">https://gitee.com/Ning310975876/photo-graphy-uniapp</a>
+
+**Blog文章分享/个人信息展示** 移动端 **博客网站**。
+
+基于 RuoYi APP 移动端框架开发，一份代码多终端适配，同时支持APP、小程序、H5！
+
+- 小程序体验
+
+<img height="200" width="200" src="ruoyi-ui/public/systemImg/WeChatApplet.jpg" alt="小程序演示"/>
+
+**演示图**
+
+<table>
+    <tr>
+        <td><img src="ruoyi-ui/public/systemImg/欣然有你摄影列表页.jpg"/></td>
+        <td><img src="ruoyi-ui/public/systemImg/欣然有你首页推荐.jpg"/></td>
+        <td><img src="ruoyi-ui/public/systemImg/欣然有你详情页.jpg"/></td>
+    </tr>
+    <tr>
+        <td><img src="ruoyi-ui/public/systemImg/欣然有你数据统计页.jpg"/></td>
+        <td><img src="ruoyi-ui/public/systemImg/欣然有你关于作者.jpg"/></td>
+    </tr>
+    
+</table>
+
+
+----------
+
+
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Blog移动端（旧版）</h1>
 
 移动端地址：<a target="_blank" href="https://gitee.com/Ning310975876/ruo-yi-vue-blog-uniapp">https://gitee.com/Ning310975876/ruo-yi-vue-blog-uniapp</a>
 

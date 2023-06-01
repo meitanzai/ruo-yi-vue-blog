@@ -201,7 +201,6 @@ npm run build:prod
     </tr>
     <tr>
         <td><img src="ruoyi-ui/public/systemImg/欣然有你数据统计页.jpg"/></td>
-        <td><img src="ruoyi-ui/public/systemImg/欣然有你关于作者.jpg"/></td>
     </tr>
     
 </table>

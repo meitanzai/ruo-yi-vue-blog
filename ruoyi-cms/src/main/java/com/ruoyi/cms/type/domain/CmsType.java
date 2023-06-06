@@ -22,9 +22,19 @@ public class CmsType extends BaseEntity
     @Excel(name = "分类名称")
     private String typeName;
 
-    /** 分类图像 */
-    @Excel(name = "分类图像")
+    /**
+     * 分类图像类型（0地址 1上传）
+     */
+    @Excel(name = "分类图像类型（0地址 1上传）", readConverterExp = "0=地址,1=上传")
+    private String typePicType;
+
+    /** 分类图像（ 1上传） */
+    @Excel(name = "分类图像（ 1上传）")
     private String typePic;
+
+    /** 分类图像（ 0地址） */
+    @Excel(name = "分类图像（ 0地址）")
+    private String typePicLink;
 
     /** 博客数量 */
     private int blogNum;
@@ -65,6 +75,22 @@ public class CmsType extends BaseEntity
         this.blogNum = blogNum;
     }
 
+    public String getTypePicType() {
+        return typePicType;
+    }
+
+    public void setTypePicType(String typePicType) {
+        this.typePicType = typePicType;
+    }
+
+    public String getTypePicLink() {
+        return typePicLink;
+    }
+
+    public void setTypePicLink(String typePicLink) {
+        this.typePicLink = typePicLink;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -75,6 +101,8 @@ public class CmsType extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("typeName", getTypeName())
             .append("typePic", getTypePic())
+                .append("typePicType", getTypePicType())
+                .append("typePicLink", getTypePicLink())
                 .append("blogNum", getBlogNum())
             .toString();
     }

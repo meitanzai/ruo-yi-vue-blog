@@ -44,11 +44,22 @@
       <el-table-column label="首图预览" align="center" prop="blogPic" >
         <template slot-scope="scope">
           <el-image
-              style="width: 120px;height: 60px;"
-              :src="scope.row.blogPic"
-              lazy
-              :preview-src-list="[scope.row.blogPic]">
-            </el-image>
+            v-if="scope.row.blogPicType == '0'"
+            style="width: 120px;height: 60px;"
+            :src="scope.row.blogPicLink"
+            lazy
+            :preview-src-list="[scope.row.blogPicLink]">
+              <div slot="error" class="image-slot">
+                <el-image src="/errorImg.jpg" fit="cover" class="blogPic"></el-image>
+              </div>
+          </el-image>
+          <el-image
+            v-if="scope.row.blogPicType == '1'"
+            style="width: 120px;height: 60px;"
+            :src="scope.row.blogPic"
+            lazy
+            :preview-src-list="[scope.row.blogPic]">
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column label="标题" align="center" prop="title" />
@@ -103,7 +114,21 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="首图">
-              <imageUpload v-model="form.blogPic" :limit="1" />
+              <el-radio-group v-model="form.blogPicType">
+                <el-radio-button label="0">地址</el-radio-button>
+                <el-radio-button label="1">上传</el-radio-button>
+              </el-radio-group>
+              <div v-show="form.blogPicType == '0'" class="tabBlock">
+                <el-input v-model="form.blogPicLink" placeholder="请输入图片地址 https://" style="margin-bottom: 10px;" />
+                <el-image :src="form.blogPicLink" :preview-src-list="[form.blogPicLink]" fit="cover" class="blogPic" >
+                  <div slot="error" class="image-slot">
+                    <el-image src="/errorImg.jpg" fit="cover" class="blogPic"></el-image>
+                  </div>
+                </el-image>
+              </div>
+              <div v-show="form.blogPicType == '1'" class="tabBlock">
+                <imageUpload v-model="form.blogPic" :limit="1" />
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="16">
@@ -346,6 +371,9 @@
             }else{
               response.rows[i].blogPic = '/errorImg.jpg'
             }
+            if (blogInfo.blogPicLink.length == 0) {
+              response.rows[i].blogPicLink = '/errorImg.jpg'
+            }
           };
           this.blogList = response.rows;
           this.total = response.total;
@@ -387,7 +415,9 @@
           status: "0",
           blogDesc: null,
           blogFiles: null,
+          blogPicType: "0",
           blogPic: null,
+          blogPicLink: null,
           tagIds: [],
           typeIds: [],
           blogFilesNew: [],
@@ -712,5 +742,13 @@
   .blogFilesInfoName {
     text-align: center;
     padding-top: 5px;
+  }
+  .tabBlock {
+    height: 180px;
+    margin-top: 20px;
+  }
+  .blogPic {
+    width: 200px;
+    height: 100px;
   }
 </style>

@@ -71,9 +71,19 @@ public class CmsBlog extends BaseEntity {
     @Excel(name = "状态", readConverterExp = "0=暂存,1=发布")
     private String status;
 
-    /** 首页图片 */
-    @Excel(name = "首页图片")
+    /**
+     * 首页图片类型（0地址 1上传）
+     */
+    @Excel(name = "首页图片类型", readConverterExp = "0=地址,1=上传")
+    private String blogPicType;
+
+    /** 首页图片（ 1上传） */
+    @Excel(name = "首页图片（ 1上传）")
     private String blogPic;
+
+    /** 首页图片（ 0地址） */
+    @Excel(name = "首页图片（ 0地址）")
+    private String blogPicLink;
 
     /** 简介 */
     @Excel(name = "简介")
@@ -226,6 +236,22 @@ public class CmsBlog extends BaseEntity {
         this.contentMarkdown = contentMarkdown;
     }
 
+    public String getBlogPicType() {
+        return blogPicType;
+    }
+
+    public void setBlogPicType(String blogPicType) {
+        this.blogPicType = blogPicType;
+    }
+
+    public String getBlogPicLink() {
+        return blogPicLink;
+    }
+
+    public void setBlogPicLink(String blogPicLink) {
+        this.blogPicLink = blogPicLink;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -246,7 +272,9 @@ public class CmsBlog extends BaseEntity {
                 .append("tagIds", getTagIds())
                 .append("tags", getTags())
                 .append("types", getTypes())
+                .append("blogPicType", getBlogPicType())
                 .append("blogPic", getBlogPic())
+                .append("blogPicLink", getBlogPicLink())
                 .append("blogDesc", getBlogDesc())
                 .append("blogFiles", getBlogFiles())
                 .toString();

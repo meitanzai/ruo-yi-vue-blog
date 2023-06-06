@@ -11,11 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="typeName"    column="type_name"    />
+        <result property="typePicType"    column="type_pic_type"    />
         <result property="typePic"    column="type_pic"    />
+        <result property="typePicLink"    column="type_pic_link"    />
     </resultMap>
 
     <sql id="selectCmsTypeVo">
-        select type_id, create_by, create_time, update_by, update_time, type_name, type_pic from cms_type
+        select type_id, create_by, create_time, update_by, update_time, type_name, type_pic_type, type_pic, type_pic_link from cms_type
     </sql>
 
     <select id="selectCmsTypeList" parameterType="CmsType" resultMap="CmsTypeResult">
@@ -45,7 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="typeName != null and typeName != ''">type_name,</if>
+            <if test="typePicType != null">type_pic_type,</if>
             <if test="typePic != null">type_pic,</if>
+            <if test="typePicLink != null">type_pic_link,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="createBy != null">#{createBy},</if>
@@ -53,7 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="typeName != null and typeName != ''">#{typeName},</if>
+            <if test="typePicType != null">#{typePicType},</if>
             <if test="typePic != null">#{typePic},</if>
+            <if test="typePicLink != null">#{typePicLink},</if>
          </trim>
     </insert>
 
@@ -65,7 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="typeName != null and typeName != ''">type_name = #{typeName},</if>
+            <if test="typePicType != null">type_pic_type = #{typePicType},</if>
             <if test="typePic != null">type_pic = #{typePic},</if>
+            <if test="typePicLink != null">type_pic_link = #{typePicLink},</if>
         </trim>
         where type_id = #{typeId}
     </update>

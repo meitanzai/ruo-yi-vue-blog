@@ -36,11 +36,15 @@
       <!-- <el-table-column label="分类ID" align="center" prop="typeId" /> -->
       <el-table-column label="分类图像" align="center" prop="typePic" width="100">
         <template slot-scope="scope">
-          <el-image style="width: 28px;height: 28px; border-radius: 50%; margin-right: 10px" :src="scope.row.typePic" lazy
-            :preview-src-list="[scope.row.typePic]">
+          <el-image style="width: 28px;height: 28px; border-radius: 50%; margin-right: 10px" :src="scope.row.typePicLink" lazy :preview-src-list="[scope.row.typePicLink]" v-if="scope.row.typePicType == '0'">
             <div slot="error" class="image-slot">
-                    <i class="el-icon-collection"></i>
-                  </div>
+              <i class="el-icon-collection"></i>
+            </div>
+          </el-image>
+          <el-image style="width: 28px;height: 28px; border-radius: 50%; margin-right: 10px" :src="scope.row.typePic" lazy :preview-src-list="[scope.row.typePic]" v-if="scope.row.typePicType == '1'">
+            <div slot="error" class="image-slot">
+              <i class="el-icon-collection"></i>
+            </div>
           </el-image>
         </template>
       </el-table-column>
@@ -72,7 +76,21 @@
           <el-input v-model="form.typeName" placeholder="请输入分类名称" />
         </el-form-item>
         <el-form-item label="分类图像">
-          <imageUpload v-model="form.typePic" :limit="1" />
+          <el-radio-group v-model="form.typePicType">
+            <el-radio-button label="0">地址</el-radio-button>
+            <el-radio-button label="1">上传</el-radio-button>
+          </el-radio-group>
+          <div v-show="form.typePicType == '0'" class="tabBlock">
+            <el-input v-model="form.typePicLink" placeholder="请输入图片地址 https://" style="margin-bottom: 10px;" />
+            <el-image :src="form.typePicLink" :preview-src-list="[form.typePicLink]" fit="cover" class="typePic" >
+              <div slot="error" class="image-slot">
+                <i class="el-icon-collection"></i>
+              </div>
+            </el-image>
+          </div>
+          <div v-show="form.typePicType == '1'" class="tabBlock">
+            <imageUpload v-model="form.typePic" :limit="1" />
+          </div>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -171,7 +189,9 @@
           updateBy: null,
           updateTime: null,
           typeName: null,
-          typePic: null
+          typePicType: '0',
+          typePic: null,
+          typePicLink: null
         };
         this.resetForm("form");
       },
@@ -248,3 +268,15 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  .tabBlock {
+    height: 180px;
+    margin-top: 20px;
+  }
+  .typePic {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
+</style>

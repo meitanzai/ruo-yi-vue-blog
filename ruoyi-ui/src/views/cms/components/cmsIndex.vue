@@ -12,42 +12,49 @@
         </div>
         <el-row type="flex" align="middle" style="flex-wrap: wrap" :gutter="20" v-for="blog in blogList" :key="blog.id"
           shadow="never" class="blog-content">
-          <el-col class="img" :xs="24" :sm="6">
-            <el-image lazy :src="blog.blogPic" @click="getBlogInfo(blog.id)"></el-image>
-          </el-col>
-          <el-col :xs="24" :sm="18" style="padding-left: 10px;padding-right: 10px;margin-bottom: 5px;margin-top: -5px;">
-            <div @click="getBlogInfo(blog.id)">
-              <h3><svg-icon icon-class="Topping" v-show="blog.top==1" /> {{blog.title}}</h3>
-              <div style="margin-bottom: 10px;">
-                  <span style="color: rgba(0, 0, 0, .4);"> {{blog.blogDesc}}</span>
-              </div>
-              <div style="margin-bottom: 10px;">
-                <el-tag effect="plain" size="mini" v-for="tag in blog.tags" :key="tag.tagId" type="success">
-                  {{tag.tagName}}
-                </el-tag>
-              </div>
-              <div class="blog-info">
-                <div class="user-info">
-                  <i class="el-icon-user"></i>
-                  <span class="header"> {{blog.createBy}}</span>
+          <div @click="getBlogInfo(blog.id)">
+            <el-col class="img" :xs="24" :sm="6">
+              <el-image v-if="blog.blogPicType == '0'" lazy :src="blog.blogPicLink">
+                <div slot="error" class="image-slot">
+                  <el-image src="/errorImg.jpg" fit="cover" class="blogPic">></el-image>
                 </div>
-                <div class="blog-date">
-                  <i class="el-icon-date"></i>
-                  <span> {{blog.createTime}}</span>
+              </el-image>
+              <el-image v-if="blog.blogPicType == '1'" lazy :src="blog.blogPic"></el-image>
+            </el-col>
+            <el-col :xs="24" :sm="18" style="padding-left: 10px;padding-right: 10px;margin-bottom: 5px;margin-top: -5px;">
+              <div>
+                <h3><svg-icon icon-class="Topping" v-show="blog.top==1" /> {{blog.title}}</h3>
+                <div style="margin-bottom: 10px;">
+                    <span style="color: rgba(0, 0, 0, .4);"> {{blog.blogDesc}}</span>
                 </div>
-                <div>
-                  <i class="el-icon-view"></i>
-                  <span> {{blog.views}}</span>
-                </div>
-                <div class="blog-type">
-                  <el-tag size="mini" v-for="tag in blog.types" :key="tag.typeId" type="info">
-                    {{tag.typeName}}
+                <div style="margin-bottom: 10px;">
+                  <el-tag effect="plain" size="mini" v-for="tag in blog.tags" :key="tag.tagId" type="success">
+                    {{tag.tagName}}
                   </el-tag>
                 </div>
+                <div class="blog-info">
+                  <div class="user-info">
+                    <i class="el-icon-user"></i>
+                    <span class="header"> {{blog.createBy}}</span>
+                  </div>
+                  <div class="blog-date">
+                    <i class="el-icon-date"></i>
+                    <span> {{blog.createTime}}</span>
+                  </div>
+                  <div>
+                    <i class="el-icon-view"></i>
+                    <span> {{blog.views}}</span>
+                  </div>
+                  <div class="blog-type">
+                    <el-tag size="mini" v-for="tag in blog.types" :key="tag.typeId" type="info">
+                      {{tag.typeName}}
+                    </el-tag>
+                  </div>
 
+                </div>
               </div>
-            </div>
-          </el-col>
+            </el-col>
+          </div>
         </el-row>
         <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" background layout="total, sizes, prev, pager, next, jumper" @pagination="getBlogList"  style="margin-bottom: 30px;float: right;margin-right: 10px;"/>
       </el-card>
@@ -63,7 +70,13 @@
             :class="cmsType.typeId === typeId? 'activeType':''">
             <div style="display: flex;align-items: center">
               <el-image style="width: 28px;height: 28px; border-radius: 50%; margin-right: 10px" lazy
-                :src="cmsType.typePic">
+                :src="cmsType.typePicLink" v-show="cmsType.typePicType == '0'">
+                <div slot="error" style="width: 28px;height: 28px; border-radius: 50%;">
+                  <i class="el-icon-collection" style="margin-left:6px;"></i>
+                </div>
+              </el-image>
+              <el-image style="width: 28px;height: 28px; border-radius: 50%; margin-right: 10px" lazy
+                :src="cmsType.typePic" v-show="cmsType.typePicType == '1'">
                 <div slot="error" style="width: 28px;height: 28px; border-radius: 50%;">
                   <i class="el-icon-collection" style="margin-left:6px;"></i>
                 </div>
@@ -432,7 +445,7 @@
     box-shadow: 0 0 20px 0 white;
     transition: all .2s;
   }
-  
+
   .left-item .pagination-container{
     background:rgb(255, 255, 255,0)
   }

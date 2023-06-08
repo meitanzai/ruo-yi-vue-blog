@@ -78,7 +78,22 @@
         </el-form-item>
         <el-form-item label="内容">
           <!-- 图片用base64存储,url方式移动端会显示异常 -->
-          <cmsEditor v-model="form.content" @getFileId="getFileId" type="base64" :min-height="192" />
+          <el-row style="margin-bottom: 20px;">
+            <el-col align="right">
+              <span v-show="form.contentType ==='2'" style="color: red;margin-right: 20px;">Markdown编辑器保存后会覆盖Quill富文本编辑器内容</span>
+              编辑器：
+              <el-select v-model="form.contentType" placeholder="请选择">
+                <el-option key="1" label="Quill富文本编辑器" value="1" />
+                <el-option key="2" label="CherryMarkdown (推荐)" value="2" />
+              </el-select>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col>
+              <cmsEditor v-if="form.contentType ==='1'" v-model="form.content" @getFileId="getFileId" type="base64" :min-height="192" />
+              <CherryMarkdown ref="CherryMarkdown" v-if="form.contentType ==='2'" :height='400' v-model='form.contentMarkdown' ></CherryMarkdown>
+            </el-col>
+          </el-row>
         </el-form-item>
         <!-- <el-form-item>
           <el-checkbox v-model="top">置顶</el-checkbox>
@@ -152,10 +167,14 @@
   import {
     Loading
   } from 'element-ui';
+  import CherryMarkdown from '@/components/CherryMarkdown'
 
   export default {
     name: "Blog",
     dicts: ['cms_blog_status'],
+    components: {
+      CherryMarkdown
+    },
     data() {
       return {
         // 遮罩层
@@ -253,7 +272,9 @@
           content: null,
           top: "0",
           views: null,
-          status: "0"
+          status: "0",
+          contentType: "1",
+          contentMarkdown: null
         };
         this.resetForm("form");
       },
@@ -303,6 +324,9 @@
             } else {
               this.form.top = 0;
             }
+            if (this.form.contentType === '2'){
+              this.setFormContent()
+            }
             if (this.form.id != null) {
               updateBlog(this.form).then(response => {
                 if(this.fileIds.length>0){
@@ -345,6 +369,9 @@
               this.form.top = 1;
             } else {
               this.form.top = 0;
+            }
+            if (this.form.contentType === '2'){
+              this.setFormContent()
             }
             if (this.form.id != null) {
               updateBlog(this.form).then(response => {
@@ -435,6 +462,9 @@
         a.setAttribute('target', '_blank')
         a.setAttribute('href', process.env.VUE_APP_BASE_API + url)
         a.click()
+      },
+      setFormContent(){
+        this.form.content = this.$refs.CherryMarkdown.getCherryHtml()
       },
     }
   };

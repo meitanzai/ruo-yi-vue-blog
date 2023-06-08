@@ -20,8 +20,8 @@
         <h2 class="blog-title header">{{blog.title}}
           <el-tag size="mini" v-for="tag in blog.types" :key="tag.typeId" type="info">{{tag.typeName}}</el-tag>
         </h2>
-        <div class="typo m-padded-lr-responsive m-padded-tb-large ql-editor"
-             v-html="blog.content"></div>
+        <div  v-if="blog.contentType ==='1'" class="typo m-padded-lr-responsive m-padded-tb-large ql-editor" v-html="blog.content"></div>
+        <div  v-if="blog.contentType ==='2'" v-html="blog.content"></div>
         <div class="tags">
           <div class="tag-item" v-for="tag in blog.tags" :key="tag.tagId">
             <div class="sjx-outer">

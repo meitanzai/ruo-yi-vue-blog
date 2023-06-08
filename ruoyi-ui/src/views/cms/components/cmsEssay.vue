@@ -8,8 +8,9 @@
             placement="top">
             <el-card
               style="letter-spacing: 1px;border: 1px solid rgba(255,190,23,0.9); background-color: rgba(255,255,255,0.9);box-shadow: 0 0 30px -10px ">
-              <h2 v-if="essay.title">{{essay.title}}</h2>
-              <div class="typo ql-editor" v-html="essay.content"></div>
+              <h2 v-if="essay.title" style="color: rgba(255,190,23,0.9);">{{essay.title}}</h2>
+              <div v-if="essay.contentType ==='1'" class="typo ql-editor" v-html="essay.content"></div>
+              <div v-if="essay.contentType ==='2'" v-html="essay.content"></div>
             </el-card>
           </el-timeline-item>
         </el-timeline>
@@ -32,7 +33,7 @@
         >
           <svg-icon icon-class="top" />
         </div>
-    </el-backtop>    
+    </el-backtop>
   </el-row>
 </template>
 

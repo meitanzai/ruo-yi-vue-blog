@@ -9,6 +9,10 @@
         <el-input v-model="queryParams.content" placeholder="请输入评论内容" clearable size="small"
           @keyup.enter.native="handleQuery" />
       </el-form-item>
+      <el-form-item label="文章标题" prop="blogTitle">
+        <el-input v-model="queryParams.blogTitle" placeholder="请输入文章标题" clearable size="small"
+          @keyup.enter.native="handleQuery" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -113,6 +117,9 @@
                 <span v-show="mes.type=='1'" class="rp">回复了</span>
                 <span v-show="mes.type=='1'" class="pcreateBy">{{mes.pcreateBy}}</span>
                 <span v-show="mes.type=='1'" class="rp">的评论</span>
+                <span class="rp">|</span>
+                <span class="rp">查看文章：</span>
+                <span class="blog" @click="getBlogInfo(mes)">{{mes.blogTitle}}</span>
               </div>
               <div class="op">
                 <span @click="getBlogInfo(mes)" class="blog">查看</span>
@@ -212,6 +219,7 @@ export default {
         content: null,
         type: null,
         blogId: null,
+        blogTitle: null,
         userId: null,
         delFlag: null,
         createBy: null,
@@ -409,7 +417,7 @@ export default {
 
   .nkname {
     margin-left: 10px;
-    max-width: 530px;
+    max-width: 830px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

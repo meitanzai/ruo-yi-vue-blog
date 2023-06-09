@@ -25,19 +25,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectCmsCommentList" parameterType="CmsComment" resultMap="CmsCommentResult">
-        <include refid="selectCmsCommentVo"/>
+        select c.id, c.parent_id, c.main_id, c.like_num, c.content, c.type, c.blog_id, c.del_flag, c.user_id, c.create_by, c.create_time, c.update_by, c.update_time from cms_comment c LEFT JOIN cms_blog b ON c.blog_id = b.id
         <where>  
-            <if test="parentId != null "> and parent_id = #{parentId}</if>
-            <if test="mainId != null "> and main_id = #{mainId}</if>
-            <if test="likeNum != null "> and like_num = #{likeNum}</if>
-            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="blogId != null "> and blog_id = #{blogId}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
-            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="parentId != null "> and c.parent_id = #{parentId}</if>
+            <if test="mainId != null "> and c.main_id = #{mainId}</if>
+            <if test="likeNum != null "> and c.like_num = #{likeNum}</if>
+            <if test="content != null  and content != ''"> and c.content like concat('%', #{content}, '%')</if>
+            <if test="type != null  and type != ''"> and c.type = #{type}</if>
+            <if test="blogId != null "> and c.blog_id = #{blogId}</if>
+            <if test="userId != null "> and c.user_id = #{userId}</if>
+            <if test="delFlag != null  and delFlag != ''"> and c.del_flag = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and c.create_by = #{createBy}</if>
+            <if test="blogTitle != null  and blogTitle != ''">
+                and b.title like concat('%', #{blogTitle}, '%')
+            </if>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY c.create_time DESC
     </select>
     
     <select id="selectCmsCommentById" parameterType="Long" resultMap="CmsCommentResult">

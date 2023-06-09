@@ -44,6 +44,9 @@ public class CmsComment extends BaseEntity
     @Excel(name = "被评论者id，可以是人、项目、资源")
     private Long blogId;
 
+    /** 文章标题 */
+    private String blogTitle;
+
     /** 删除标志（0代表存在 1代表删除） */
     private String delFlag;
 
@@ -173,6 +176,14 @@ public class CmsComment extends BaseEntity
         return isLike;
     }
 
+    public String getBlogTitle() {
+        return blogTitle;
+    }
+
+    public void setBlogTitle(String blogTitle) {
+        this.blogTitle = blogTitle;
+    }
+
     public void setIsLike(boolean like) {
         isLike = like;
     }
@@ -187,6 +198,7 @@ public class CmsComment extends BaseEntity
             .append("content", getContent())
             .append("type", getType())
             .append("blogId", getBlogId())
+            .append("blogTitle", getBlogTitle())
             .append("delFlag", getDelFlag())
             .append("userId", getUserId())
             .append("createBy", getCreateBy())

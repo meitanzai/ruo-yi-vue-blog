@@ -3,10 +3,13 @@ package com.ruoyi.cms.comment.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ruoyi.cms.blog.domain.CmsBlog;
+import com.ruoyi.cms.blog.mapper.CmsBlogMapper;
 import com.ruoyi.cms.comment.domain.CmsCommentLike;
 import com.ruoyi.cms.comment.mapper.CmsCommentLikeMapper;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class CmsCommentServiceImpl implements ICmsCommentService
 
     @Autowired
     private CmsCommentLikeMapper cmsCommentLikeMapper;
+
+    @Autowired
+    private CmsBlogMapper cmsBlogMapper;
 
 
     /**
@@ -196,6 +202,12 @@ public class CmsCommentServiceImpl implements ICmsCommentService
             if (parentId!=null){
                 CmsComment parentComment = cmsCommentMapper.selectCmsCommentById(parentId);
                 comment.setPCreateBy(parentComment.getCreateBy());
+            }
+            //添加博客信息
+            Long blogId = comment.getBlogId();
+            if (blogId!=null){
+                CmsBlog blog = cmsBlogMapper.selectCmsBlogById(blogId);
+                comment.setBlogTitle(blog.getTitle());
             }
         }
         //排序

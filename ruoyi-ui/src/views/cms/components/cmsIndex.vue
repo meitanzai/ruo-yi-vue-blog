@@ -4,7 +4,7 @@
     <el-col :xs="24" :sm="15">
       <el-card style="background-color: rgba(255,255,255,0.9)" class="left-item">
         <div slot="header" class="total">
-          <div class="title">
+          <div class="titleIndex">
             <i v-if="selected" class="el-icon-back" @click="updateBlogList"></i>
             <span>{{selectMethod}}</span>
           </div>
@@ -230,6 +230,7 @@
         cmsListBlog(this.queryParams).then(response => {
           this.blogList = this.picSrc(response.rows);
           this.total = response.total;
+        }).finally(()=>{
           loadingInstance.close();
         });
       },
@@ -319,6 +320,9 @@
       },
       // 按分类筛选博客
       async selectType(cmsType) {
+        let loadingInstance = Loading.service({
+          target: ".left-item"
+        });
         this.typeId = cmsType.typeId
         cmsListByTypeId(this.typeId).then(response => {
           this.blogList = this.picSrc(response.rows);
@@ -326,10 +330,15 @@
           // this.totalcount = res.data.totalElements
           this.selectMethod = '分类: ' + cmsType.typeName
           this.selected = true
+        }).finally(()=>{
+          loadingInstance.close();
         });
       },
       // 按标签筛选博客
       async selectTag(tag) {
+        let loadingInstance = Loading.service({
+          target: ".left-item"
+        });
         this.tagId = tag.tagId
         cmsListByTagId(this.tagId).then(response => {
           this.blogList = this.picSrc(response.rows);
@@ -337,6 +346,8 @@
           // this.totalcount = res.data.totalElements
           this.selectMethod = '标签: ' + tag.tagName
           this.selected = true
+        }).finally(()=>{
+          loadingInstance.close();
         });
       },
       // 更新博客列表
@@ -648,7 +659,7 @@
     font-weight: bold;
   }
 
-  .title {
+  .titleIndex {
     display: flex;
     align-items: center;
   }

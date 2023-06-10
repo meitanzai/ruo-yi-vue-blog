@@ -188,7 +188,7 @@ npm run build:prod
 
 - 小程序体验
 
-<img height="200" width="200" src="ruoyi-ui/public/systemImg/WeChatApplet.jpg" alt="小程序演示"/>
+<img height="200" width="543" src="ruoyi-ui/public/systemImg/WeChatApplet.jpg" alt="小程序演示"/>
 
 **演示图**
 

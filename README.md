@@ -178,7 +178,7 @@ npm run build:prod
 ----------
 
 
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">欣然有你小程序（移动端可适配）</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Blog小程序（移动端可适配）</h1>
 
 移动端地址：<a target="_blank" href="https://gitee.com/Ning310975876/photo-graphy-uniapp">https://gitee.com/Ning310975876/photo-graphy-uniapp</a>
 

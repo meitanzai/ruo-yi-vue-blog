@@ -222,21 +222,19 @@ npm run build:prod
     <tr>
         <td><img src="ruoyi-ui/public/systemImg/移动端首页.png"/></td>
         <td><img src="ruoyi-ui/public/systemImg/移动端详情文章.png"/></td>
-    </tr>
-    <tr>
         <td><img src="ruoyi-ui/public/systemImg/移动端详情评论.png"/></td>
-        <td><img src="ruoyi-ui/public/systemImg/移动端随笔.png"/></td>
     </tr>
     <tr>
+        <td><img src="ruoyi-ui/public/systemImg/移动端随笔.png"/></td>
         <td><img src="ruoyi-ui/public/systemImg/移动端个人中心1.png"/></td>
         <td><img src="ruoyi-ui/public/systemImg/移动端编辑资料.png"/></td>
     </tr>
     <tr>
         <td><img src="ruoyi-ui/public/systemImg/移动端关于我们.png"/></td>
         <td><img src="ruoyi-ui/public/systemImg/移动端应用设置.png"/></td>
+		<td><img src="ruoyi-ui/public/systemImg/移动端留言.png"/></td>
     </tr>
 	<tr>
-		<td><img src="ruoyi-ui/public/systemImg/移动端留言.png"/></td>
         <td><img src="ruoyi-ui/public/systemImg/移动端登录.png"/></td>
     </tr>
     

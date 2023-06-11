@@ -97,7 +97,7 @@
               case 'shortKey':
                 return `${selection}markdown教程在这里：https://markdown.com.cn/`;
               case 'github':
-                return `${selection}Markdown语法速查表在这里：https://markdown.com.cn/cheat-sheet.html`;
+                return `${selection}Emoji表情在这里：https://emojipedia.org/zh/`;
               case 'release':
                 return `${selection}完整示例看这里：https://tencent.github.io/cherry-markdown/examples/index.html`;
               default:
@@ -113,7 +113,7 @@
             },
             {
               noIcon: true,
-              name: '语法速查表',
+              name: 'Emoji 表情',
               onclick: (event) => {
                 this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'github')
               }

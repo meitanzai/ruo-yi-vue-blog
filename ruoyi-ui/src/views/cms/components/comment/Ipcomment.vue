@@ -14,11 +14,18 @@
     </div>
     <el-form :model="messageForm" :rules="messageFormRules" ref="messageFormRef">
       <el-form-item prop="content">
-        <el-input :rows="5" v-model="messageForm.content" type="textarea" maxlength="100" show-word-limit
+        <el-input @blur="blur" :rows="5" v-model="messageForm.content" type="textarea" maxlength="100" show-word-limit
           placeholder="请输入你的评论"></el-input>
       </el-form-item>
       <el-form-item style="text-align: right">
-        <el-button type="primary" @click="publish">发表评论</el-button>
+        <el-row>
+          <el-col :span="12" style="text-align: left">
+            <Emoji @output="output"></Emoji>
+          </el-col>
+          <el-col :span="12" style="text-align: right">
+            <el-button type="primary" @click="publish">点击发表</el-button>
+          </el-col>
+        </el-row>
       </el-form-item>
     </el-form>
     <el-divider v-if="messageList.length>0"><span style="color: #999;font-size: small;">最新评论</span></el-divider>
@@ -40,6 +47,7 @@
     cmsAddComment,
   } from "@/api/cms/comment"
   import comment from './comments.vue'
+  import Emoji from '@/components/Emoji'
   export default {
     name: 'Ipcomment',
     data() {
@@ -76,6 +84,8 @@
             message: "评论内容不超过100字！"
           }]
         },
+        cursorIndexStart: null,//光标选中开始的位置
+        cursorIndexEnd: null,//光标选中结束的位置
       }
     },
     created() {
@@ -96,7 +106,8 @@
       ]),
     },
     components: {
-      comment
+      comment,
+      Emoji
     },
     methods: {
       // 表单重置
@@ -193,6 +204,19 @@
           this.messageList = response.rows;
           this.total = response.total;
         });
+      },
+      blur(e){
+        this.cursorIndexStart = e.srcElement.selectionStart  // 获取input输入框失去焦点时光标选中开始的位置
+        this.cursorIndexEnd = e.srcElement.selectionEnd  // 获取input输入框失去焦点时光标选中结束的位置
+      },
+      output(val) {
+        if (this.cursorIndexStart !== null && this.messageForm.content) {
+          //如果 文本域获取了焦点, 则在光标位置处插入对应字段内容
+          this.messageForm.content = this.messageForm.content.substring(0, this.cursorIndexStart) + val + this.messageForm.content.substring(this.cursorIndexEnd)
+        } else {
+          // 如果 文本域未获取焦点, 则在字符串末尾处插入对应字段内容
+          this.messageForm.content = this.messageForm.content?this.messageForm.content:'' + val
+        }
       },
       //跳转到相应位置
       to() {

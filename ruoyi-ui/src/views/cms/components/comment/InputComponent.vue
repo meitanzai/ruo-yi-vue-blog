@@ -7,13 +7,21 @@
                 type="textarea"
                 :rows="3"
                 @focus="inputFocus"
+                @blur="blur"
                 :placeholder="name">
       </el-input>
       <!--enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp"-->
       <transition name="fade2">
         <div class="btn-control" v-show="controlShow">
-          <span class="cancel" @click="cancel">取消</span>
-          <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+          <el-row>
+            <el-col :span="12" style="text-align: left">
+              <Emoji @output="output"></Emoji>
+            </el-col>
+            <el-col :span="12" style="text-align: right">
+              <span class="cancel" @click="cancel">取消</span>
+              <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+            </el-col>
+          </el-row>
         </div>
       </transition>
     </div>
@@ -21,6 +29,7 @@
 </template>
 
 <script>
+  import Emoji from '@/components/Emoji'
   export default {
     props: {
       //控制整个组件是否显示
@@ -46,14 +55,16 @@
         // default: 'comment'
       }
     },
-    components: {},
+    components: {Emoji},
     data() {
       return {
         inputComment: '',
         name:'',
         id:'',
         //确定取消按钮是否显示
-        controlShow: false
+        controlShow: false,
+        cursorIndexStart: null,//光标选中开始的位置
+        cursorIndexEnd: null,//光标选中结束的位置
       }
     },
     computed: {},
@@ -81,6 +92,19 @@
         // console.log("focus");
         if (this.type === 'end') {
           this.controlShow = true
+        }
+      },
+      blur(e){
+        this.cursorIndexStart = e.srcElement.selectionStart  // 获取input输入框失去焦点时光标选中开始的位置
+        this.cursorIndexEnd = e.srcElement.selectionEnd  // 获取input输入框失去焦点时光标选中结束的位置
+      },
+      output(val) {
+        if (this.cursorIndexStart !== null && this.inputComment) {
+          //如果 文本域获取了焦点, 则在光标位置处插入对应字段内容
+          this.inputComment = this.inputComment.substring(0, this.cursorIndexStart) + val + this.inputComment.substring(this.cursorIndexEnd)
+        } else {
+          // 如果 文本域未获取焦点, 则在字符串末尾处插入对应字段内容
+          this.inputComment = this.inputComment?this.inputComment:'' + val
         }
       },
 
@@ -131,7 +155,6 @@
       /*background-color: #67C23A;*/
     }
     .btn-control {
-      display: flex;
       justify-content: flex-end;
       align-items: center;
       padding-top: 10px;

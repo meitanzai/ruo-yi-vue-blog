@@ -147,29 +147,12 @@
     <!-- 添加或修改评论管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <!-- <el-form-item label="父评论id" prop="parentId">
-          <el-input v-model="form.parentId" placeholder="请输入父评论id" />
-        </el-form-item>
-        <el-form-item label="主评论id(第一级评论)" prop="mainId">
-          <el-input v-model="form.mainId" placeholder="请输入主评论id(第一级评论)" />
-        </el-form-item>
-        <el-form-item label="点赞数量" prop="likeNum">
-          <el-input v-model="form.likeNum" placeholder="请输入点赞数量" />
-        </el-form-item> -->
-        <!-- <el-form-item label="内容" prop="content"> -->
-          <el-input v-model="form.content" type="textarea" maxlength="100" show-word-limit :placeholder="toName" />
-        <!-- </el-form-item> -->
-        <!-- <el-form-item label="被评论者id，可以是人、项目、资源" prop="blogId">
-          <el-input v-model="form.blogId" placeholder="请输入被评论者id，可以是人、项目、资源" />
-        </el-form-item>
-        <el-form-item label="删除标志" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入删除标志" />
-        </el-form-item>
-        <el-form-item label="评论者id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入评论者id" />
-        </el-form-item> -->
+          <el-input @blur="blur" v-model="form.content" type="textarea" maxlength="100" show-word-limit :placeholder="toName" />
       </el-form>
       <div slot="footer" class="dialog-footer">
+        <div style="float: left;">
+          <Emoji @output="output"></Emoji>
+        </div>
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -185,9 +168,13 @@ import { listComment, getComment, delComment, addComment, updateComment } from "
 import {
     Loading
   } from 'element-ui';
+import Emoji from '@/components/Emoji'
 
 export default {
   name: "Comment",
+  components: {
+    Emoji
+  },
   data() {
     return {
       // 遮罩层
@@ -231,6 +218,8 @@ export default {
       },
       toName:'',
       isAdmin: false,
+      cursorIndexStart: null,//光标选中开始的位置
+      cursorIndexEnd: null,//光标选中结束的位置
     };
   },
   computed: {
@@ -388,6 +377,19 @@ export default {
       // 验证用户是否具备某角色
       if(this.$auth.hasRole("admin")||this.$auth.hasRole("cms")){
         this.isAdmin = true;
+      }
+    },
+    blur(e){
+      this.cursorIndexStart = e.srcElement.selectionStart  // 获取input输入框失去焦点时光标选中开始的位置
+      this.cursorIndexEnd = e.srcElement.selectionEnd  // 获取input输入框失去焦点时光标选中结束的位置
+    },
+    output(val) {
+      if (this.cursorIndexStart !== null && this.form.content) {
+        //如果 文本域获取了焦点, 则在光标位置处插入对应字段内容
+        this.form.content = this.form.content.substring(0, this.cursorIndexStart) + val + this.form.content.substring(this.cursorIndexEnd)
+      } else {
+        // 如果 文本域未获取焦点, 则在字符串末尾处插入对应字段内容
+        this.form.content = this.form.content?this.form.content:'' + val
       }
     },
   }

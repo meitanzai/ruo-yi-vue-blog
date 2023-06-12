@@ -369,7 +369,8 @@ export default {
     handleFileSuccess(response, file, fileList) {
       this.upload.isUploading = false;
       this.form.filePath = response.url;
-      this.msgSuccess(response.msg);
+      this.$modal.msgSuccess(response.msg);
+      this.getList()
     },
     /** 新增按钮操作 */
     handleAdd() {

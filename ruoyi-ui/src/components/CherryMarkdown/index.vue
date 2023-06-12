@@ -382,7 +382,7 @@
           })
         }
         if (resp.code === 200) {
-          imgMdStr = `![${resp.fileName}](${resp.url})`
+          imgMdStr = `![${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`
         }
         this.cherrInstance.insert(imgMdStr)
       },

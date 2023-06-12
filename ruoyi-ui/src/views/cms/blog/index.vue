@@ -96,8 +96,8 @@
             v-hasPermi="['cms:blog:remove']">删除</el-button>
             <el-button size="mini" type="text" icon="el-icon-folder-opened" @click="blogFiles(scope.row)"
               v-hasPermi="['cms:blog:edit']">附件管理</el-button>
-          <el-button size="mini" type="text" icon="el-icon-folder-opened" @click="fileList(scope.row)"
-            v-hasPermi="['cms:blog:edit']">资源列表</el-button>
+          <!-- <el-button size="mini" type="text" icon="el-icon-folder-opened" @click="fileList(scope.row)"
+            v-hasPermi="['cms:blog:edit']">资源列表</el-button> -->
         </template>
       </el-table-column>
     </el-table>

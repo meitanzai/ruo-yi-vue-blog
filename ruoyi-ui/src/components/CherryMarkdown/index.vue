@@ -400,7 +400,6 @@
       afterInit(e) {},
       // 图片加载回调
       beforeImageMounted(e, src) {
-        console.log('bfImageMt', e, src)
         return {
           [e]: src
         }

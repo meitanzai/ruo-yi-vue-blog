@@ -94,11 +94,15 @@
           iconName: 'question',
           onClick: (selection, type) => {
             switch (type) {
-              case 'shortKey':
+              case 'markdown':
                 return `${selection}markdown教程在这里：https://markdown.com.cn/`;
-              case 'github':
+              case 'Emoji':
                 return `${selection}Emoji表情在这里：https://emojipedia.org/zh/`;
-              case 'release':
+              case 'formula':
+                return `${selection}LaTeX公式编辑器在这里：https://www.latexlive.com/`;
+              case 'draw':
+                return `${selection}流程图表制作在这里：https://draw.io/`;
+              case 'Example':
                 return `${selection}完整示例看这里：https://tencent.github.io/cherry-markdown/examples/index.html`;
               default:
                 return selection;
@@ -108,21 +112,35 @@
               noIcon: true,
               name: 'markdown教程',
               onclick: (event) => {
-                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'shortKey')
+                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'markdown')
               }
             },
             {
               noIcon: true,
               name: 'Emoji 表情',
               onclick: (event) => {
-                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'github')
+                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'Emoji')
+              }
+            },
+            {
+              noIcon: true,
+              name: '公式编辑器',
+              onclick: (event) => {
+                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'formula')
+              }
+            },
+            {
+              noIcon: true,
+              name: '流程图表制作',
+              onclick: (event) => {
+                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'draw')
               }
             },
             {
               noIcon: true,
               name: '完整示例',
               onclick: (event) => {
-                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'release')
+                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'Example')
               }
             },
           ]
@@ -201,6 +219,9 @@
                 // 是否显示“复制”按钮
                 customRenderer: { // 自定义语法渲染器
                 },
+                mermaid: {
+                  svg2img: false, // 是否将mermaid生成的画图变成img格式
+                },
 
                 /**
                  * indentedCodeBlock是缩进代码块是否启用的开关
@@ -252,14 +273,14 @@
               mathBlock: {
                 engine: 'MathJax',
                 // katex或MathJax
-                src: '',
+                src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js', // 如果使用MathJax plugins，则需要使用该url通过script标签引入
                 plugins: true // 默认加载插件
 
               },
               inlineMath: {
                 engine: 'MathJax',
                 // katex或MathJax
-                src: ''
+                src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js' // 如果使用MathJax plugins，则需要使用该url通过script标签引入
               },
               toc: {
                 /** 默认只渲染一个目录 */
@@ -333,6 +354,8 @@
               customMenuCName: customMenuC,
             },
           },
+          // 打开draw.io编辑页的url，如果为空则drawio按钮失效
+          drawioIframeUrl: 'https://draw.io/',
           callback: {
             afterChange: this.afterChange,
             afterInit: this.afterInit,

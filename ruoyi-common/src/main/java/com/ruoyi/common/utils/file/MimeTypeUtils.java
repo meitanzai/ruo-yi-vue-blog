@@ -26,6 +26,8 @@ public class MimeTypeUtils
 
     public static final String[] VIDEO_EXTENSION = { "mp4", "avi", "rmvb" };
 
+    public static final String[] AUDIO_EXTENSION = { "mp3" };
+
     public static final String[] DEFAULT_ALLOWED_EXTENSION = {
             // 图片
             "bmp", "gif", "jpg", "jpeg", "png",
@@ -35,6 +37,8 @@ public class MimeTypeUtils
             "rar", "zip", "gz", "bz2",
             // 视频格式
             "mp4", "avi", "rmvb",
+            // 音频格式
+            "mp3",
             // pdf
             "pdf" };
 

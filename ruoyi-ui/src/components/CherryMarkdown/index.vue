@@ -356,6 +356,17 @@
           },
           // 打开draw.io编辑页的url，如果为空则drawio按钮失效
           drawioIframeUrl: 'https://draw.io/',
+          /**
+           * 上传文件的时候用来指定文件类型
+           */
+          fileTypeLimitMap: {
+            video: 'video/*',
+            audio: 'audio/*',
+            image: 'image/*',
+            word: '.doc,.docx',
+            pdf: '.pdf',
+            file: '*',
+          },
           callback: {
             afterChange: this.afterChange,
             afterInit: this.afterInit,
@@ -377,7 +388,7 @@
           locale: 'zh_CN'
         })
       },
-      // 上传通用接口未实现audioVideo
+      // 上传通用接口
       fileUpload(file) {
         var formData = new FormData()
         formData.append('file', file)
@@ -405,7 +416,15 @@
           })
         }
         if (resp.code === 200) {
-          imgMdStr = `![${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`
+          if (/mp4|avi|rmvb/i.test(resp.fileSuffix)) {
+            imgMdStr = `!video[${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`;
+          } else if (/mp3/i.test(resp.fileSuffix)) {
+            imgMdStr = `!audio[${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`;
+          } else if (/bmp|gif|jpg|jpeg|png/i.test(resp.fileSuffix)) {
+            imgMdStr = `![${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`
+          } else {
+            imgMdStr = `[${resp.fileOriginName}](${process.env.VUE_APP_BASE_API + resp.fileName})`
+          }
         }
         this.cherrInstance.insert(imgMdStr)
       },

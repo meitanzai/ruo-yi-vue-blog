@@ -141,11 +141,12 @@
           <!-- 图片用base64存储,url方式移动端会显示异常 -->
           <el-row style="margin-bottom: 20px;">
             <el-col align="right">
-              <span v-show="form.contentType ==='2'" style="color: #E6A23C;margin-right: 20px;">Markdown编辑器保存后会覆盖Quill富文本编辑器内容</span>
+              <span v-show="form.contentType ==='2'" style="color: #E6A23C;margin-right: 20px;">Markdown编辑器保存后会覆盖其他富文本编辑器内容</span>
               编辑器：
               <el-select v-model="form.contentType" placeholder="请选择">
                 <el-option key="1" label="Quill富文本编辑器" value="1" />
                 <el-option key="2" label="CherryMarkdown (推荐)" value="2" />
+                <el-option key="3" label="Tinymce富文本编辑器" value="3" />
               </el-select>
             </el-col>
           </el-row>
@@ -153,6 +154,7 @@
             <el-col>
               <cmsEditor v-if="form.contentType ==='1'" v-model="form.content" @getFileId="getFileId" type="base64" :min-height="192" />
               <CherryMarkdown ref="CherryMarkdown" v-if="form.contentType ==='2'" :height='400' v-model='form.contentMarkdown' ></CherryMarkdown>
+              <Tinymce v-if="form.contentType ==='3'" :height='400' v-model='form.content'></Tinymce>
             </el-col>
           </el-row>
         </el-form-item>
@@ -270,6 +272,7 @@
 <script>
   import filesUpload from './components/filesUpload'
   import CherryMarkdown from '@/components/CherryMarkdown'
+  import Tinymce from '@/components/Tinymce'
   import {
     listBlog,
     getBlog,
@@ -295,7 +298,8 @@
     dicts: ['cms_blog_status'],
     components: {
       filesUpload,
-      CherryMarkdown
+      CherryMarkdown,
+      Tinymce
     },
     data() {
       return {

@@ -9,6 +9,7 @@
 
 <script>
 /**
+ * tinymce版本:^4.9.3
  * docs:
  * https://panjiachen.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
  */
@@ -186,6 +187,9 @@ export default {
             _this.fullscreen = e.state
           })
         },
+        templates: [
+            {title: 'Some title 1', description: 'Some desc 1', content: '这是模板内容。'}
+        ],
         // it will try to keep these URLs intact
         // https://www.tiny.cloud/docs-3x/reference/configuration/Configuration3x@convert_urls/
         // https://stackoverflow.com/questions/5196205/disable-tinymce-absolute-to-relative-url-conversions

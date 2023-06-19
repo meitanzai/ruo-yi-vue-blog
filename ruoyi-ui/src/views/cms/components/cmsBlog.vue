@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import 'cherry-markdown/dist/cherry-markdown.min.css'
 import comment from "./comment/Ipcomment"
 import {
     getBlogDetail,

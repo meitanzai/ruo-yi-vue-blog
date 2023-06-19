@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import 'cherry-markdown/dist/cherry-markdown.min.css'
   import {
     cmsEssayList,
   } from "@/api/cms/blog";

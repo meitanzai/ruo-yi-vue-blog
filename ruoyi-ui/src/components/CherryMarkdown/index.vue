@@ -100,8 +100,6 @@
                 return `${selection}Emoji表情在这里：https://emojipedia.org/zh/`;
               case 'formula':
                 return `${selection}LaTeX公式编辑器在这里：https://www.latexlive.com/`;
-              case 'draw':
-                return `${selection}流程图表制作在这里：https://draw.io/`;
               case 'Example':
                 return `${selection}完整示例看这里：https://tencent.github.io/cherry-markdown/examples/index.html`;
               default:
@@ -127,13 +125,6 @@
               name: '公式编辑器',
               onclick: (event) => {
                 this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'formula')
-              }
-            },
-            {
-              noIcon: true,
-              name: '流程图表制作',
-              onclick: (event) => {
-                this.cherrInstance.toolbar.menus.hooks.customMenuCName.fire(null, 'draw')
               }
             },
             {
@@ -329,7 +320,7 @@
               {
                 strikethrough: ['strikethrough', 'underline', 'sub', 'sup', 'ruby', 'customMenuAName'],
               },
-              '|', 'color', 'header', 'ruby', '|', 'list',
+              'size','|', 'color', 'header', '|','drawIo', '|', 'list',
               'panel', 'justify', // 对齐方式，默认不推荐这么“复杂”的样式要求
               'detail', '|', {
                 insert: ['image', 'audio', 'video', 'link', 'hr', 'br', 'code', 'formula', 'toc', 'table',
@@ -355,7 +346,7 @@
             },
           },
           // 打开draw.io编辑页的url，如果为空则drawio按钮失效
-          drawioIframeUrl: 'https://draw.io/',
+          drawioIframeUrl: window.location.origin + '/CherryMarkdown/drawio_demo.html',
           /**
            * 上传文件的时候用来指定文件类型
            */
@@ -513,5 +504,13 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+  // draw.io样式修改，不能加scoped否则不生效
+  .cherry-dialog {
+    z-index: 9999 !important;
+    .cherry-dialog-iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>​

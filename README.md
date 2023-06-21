@@ -17,7 +17,7 @@
 
 基于**RuoYi-Vue**前后端分离基础平台开发的**博客网站**。
 
-**支持多种编辑器：**Markdown 编辑器 CherryMarkdown ； 富文本编辑器 Quill、 Tinymce，支持标签分类检索，支持移动端和小程序
+**支持多种编辑器：** Markdown 编辑器 CherryMarkdown ； 富文本编辑器 Quill、 Tinymce，支持标签分类检索，支持移动端和小程序
 
 👍👍 感谢若依❤️❤️ 
 

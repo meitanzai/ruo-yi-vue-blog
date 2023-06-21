@@ -38,7 +38,10 @@
 </template>
 
 <script>
-  import 'cherry-markdown/dist/cherry-markdown.min.css'
+  // import 'cherry-markdown/dist/cherry-markdown.min.css'
+//使用prism.js代码高亮
+import '@/views/cms/plugins/prism.js'
+import '@/views/cms/plugins/prism.css'
   import {
     cmsEssayList,
   } from "@/api/cms/blog";

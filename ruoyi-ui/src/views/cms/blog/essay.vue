@@ -321,45 +321,47 @@
       releaseForm() {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            this.form.type = 2;
-            this.form.status = 1;
-            if (this.top) {
-              this.form.top = 1;
-            } else {
-              this.form.top = 0;
-            }
-            if (this.form.contentType === '2'){
-              this.setFormContent()
-            }
-            if (this.form.id != null) {
-              updateBlog(this.form).then(response => {
-                if(this.fileIds.length>0){
-                  let fileBlogInfo = {
-                    blogId: this.form.id,
-                    fileIds: this.fileIds
-                  };
-                  addFileBlogInfo(fileBlogInfo).then(response => {});
-                }
-                this.$modal.msgSuccess("修改成功");
-                this.fileIds.length = 0;
-                this.open = false;
-                this.getList();
-              });
-            } else {
-              addBlog(this.form).then(response => {
-                if(this.fileIds.length>0){
-                  let fileBlogInfo = {
-                    blogId: response.data,
-                    fileIds: this.fileIds
-                  };
-                  addFileBlogInfo(fileBlogInfo).then(response => {});
-                }
-                this.$modal.msgSuccess("新增成功");
-                this.fileIds.length = 0;
-                this.open = false;
-                this.getList();
-              });
-            }
+            this.$modal.confirm('是否确认发布？').then(()=>{
+              this.form.type = 2;
+              this.form.status = 1;
+              if (this.top) {
+                this.form.top = 1;
+              } else {
+                this.form.top = 0;
+              }
+              if (this.form.contentType === '2'){
+                this.setFormContent()
+              }
+              if (this.form.id != null) {
+                updateBlog(this.form).then(response => {
+                  if(this.fileIds.length>0){
+                    let fileBlogInfo = {
+                      blogId: this.form.id,
+                      fileIds: this.fileIds
+                    };
+                    addFileBlogInfo(fileBlogInfo).then(response => {});
+                  }
+                  this.$modal.msgSuccess("发布成功");
+                  this.fileIds.length = 0;
+                  this.open = false;
+                  this.getList();
+                });
+              } else {
+                addBlog(this.form).then(response => {
+                  if(this.fileIds.length>0){
+                    let fileBlogInfo = {
+                      blogId: response.data,
+                      fileIds: this.fileIds
+                    };
+                    addFileBlogInfo(fileBlogInfo).then(response => {});
+                  }
+                  this.$modal.msgSuccess("发布成功");
+                  this.fileIds.length = 0;
+                  this.open = false;
+                  this.getList();
+                });
+              }
+            }).catch(() => {})
           }
         });
       },
@@ -367,45 +369,47 @@
       saveForm() {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            this.form.type = 2;
-            this.form.status = 0;
-            if (this.top) {
-              this.form.top = 1;
-            } else {
-              this.form.top = 0;
-            }
-            if (this.form.contentType === '2'){
-              this.setFormContent()
-            }
-            if (this.form.id != null) {
-              updateBlog(this.form).then(response => {
-                if(this.fileIds.length>0){
-                  let fileBlogInfo = {
-                    blogId: this.form.id,
-                    fileIds: this.fileIds
-                  };
-                  addFileBlogInfo(fileBlogInfo).then(response => {});
-                }
-                this.$modal.msgSuccess("修改成功");
-                this.fileIds.length = 0;
-                this.open = false;
-                this.getList();
-              });
-            } else {
-              addBlog(this.form).then(response => {
-                if(this.fileIds.length>0){
-                  let fileBlogInfo = {
-                    blogId: response.data,
-                    fileIds: this.fileIds
-                  };
-                  addFileBlogInfo(fileBlogInfo).then(response => {});
-                }
-                this.$modal.msgSuccess("新增成功");
-                this.fileIds.length = 0;
-                this.open = false;
-                this.getList();
-              });
-            }
+            this.$modal.confirm('是否确认暂存？').then(()=>{
+              this.form.type = 2;
+              this.form.status = 0;
+              if (this.top) {
+                this.form.top = 1;
+              } else {
+                this.form.top = 0;
+              }
+              if (this.form.contentType === '2'){
+                this.setFormContent()
+              }
+              if (this.form.id != null) {
+                updateBlog(this.form).then(response => {
+                  if(this.fileIds.length>0){
+                    let fileBlogInfo = {
+                      blogId: this.form.id,
+                      fileIds: this.fileIds
+                    };
+                    addFileBlogInfo(fileBlogInfo).then(response => {});
+                  }
+                  this.$modal.msgSuccess("暂存成功");
+                  this.fileIds.length = 0;
+                  this.open = false;
+                  this.getList();
+                });
+              } else {
+                addBlog(this.form).then(response => {
+                  if(this.fileIds.length>0){
+                    let fileBlogInfo = {
+                      blogId: response.data,
+                      fileIds: this.fileIds
+                    };
+                    addFileBlogInfo(fileBlogInfo).then(response => {});
+                  }
+                  this.$modal.msgSuccess("暂存成功");
+                  this.fileIds.length = 0;
+                  this.open = false;
+                  this.getList();
+                });
+              }
+            }).catch(() => {})
           }
         });
       },

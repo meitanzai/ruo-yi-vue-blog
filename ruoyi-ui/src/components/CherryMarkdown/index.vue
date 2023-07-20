@@ -523,6 +523,7 @@
   }
   .cherry-markdown-previewer {
     border: none;
+    padding: 20px 20px 20px 20px;
     background-color: white;
     box-shadow: 0 0px 0px white;
     -webkit-box-shadow: 0 0px 0px white!important;

@@ -14,7 +14,7 @@
     props: {
       height: {
         type: Number | String,
-        default: 800
+        default: null
       },
       value: {
         type: String,
@@ -23,6 +23,10 @@
       mdId: {
         type: String,
         default: 'markdown-container'
+      },
+      defaultModel: {
+        type: String,
+        default: 'edit&preview'
       }
     },
     data() {
@@ -303,7 +307,7 @@
             // edit&preview: 双栏编辑预览模式
             // editOnly: 纯编辑模式（没有预览，可通过toolbar切换成双栏或预览模式）
             // previewOnly: 预览模式（没有编辑框，toolbar只显示“返回编辑”按钮，可通过toolbar切换成编辑模式）
-            defaultModel: 'edit&preview',
+            defaultModel: this.defaultModel,
             // 粘贴时是否自动将html转成markdown
             convertWhenPaste: true,
             codemirror: {
@@ -314,7 +318,7 @@
           toolbars: {
             theme: 'dark',
             // light or dark
-            showToolbar: true,
+            showToolbar: this.defaultModel=="previewOnly"?false:true,
             // false：不展示顶部工具栏； true：展示工具栏; toolbars.showToolbar=false 与 toolbars.toolbar=false 等效
             toolbar: ['bold', 'italic',
               {
@@ -368,6 +372,10 @@
             onCopyCode: this.onCopyCode,
             // 把中文变成拼音的回调，当然也可以把中文变成英文、英文变成中文
             changeString2Pinyin: this.changeString2Pinyin
+          },
+          previewer: {
+            // 自定义markdown预览区域class
+            className: 'cherry-markdown-previewer'
           },
           // 预览页面不需要绑定事件
           isPreviewOnly: false,
@@ -512,5 +520,11 @@
       width: 100%;
       height: 100%;
     }
+  }
+  .cherry-markdown-previewer {
+    border: none;
+    background-color: white;
+    box-shadow: 0 0px 0px white;
+    -webkit-box-shadow: 0 0px 0px white!important;
   }
 </style>​
